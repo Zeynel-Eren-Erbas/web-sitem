@@ -7,7 +7,7 @@ export default function About() {
       
       <div className="space-y-8 text-lg text-zinc-400 font-light leading-relaxed">
         <p>
-          Merhaba! Ben Mehmet. 11. sınıf bilişim teknolojileri öğrencisiyim. Yazılım dünyasına olan ilgim, bilgisayarların nasıl çalıştığını merak etmemle başladı ve o günden beri sürekli yeni şeyler öğreniyorum.
+          Merhaba! Ben Zeynel Eren Erbaş. 11. sınıf bilişim teknolojileri öğrencisiyim. Yazılım dünyasına olan ilgim, bilgisayarların nasıl çalıştığını merak etmemle başladı ve o günden beri sürekli yeni şeyler öğreniyorum.
         </p>
         <p>
           Şu anda özellikle <strong>React</strong>, <strong>TypeScript</strong> ve <strong>Firebase</strong> gibi modern web teknolojileri üzerinde kendimi geliştiriyorum. Sadece kod yazmakla kalmıyor, aynı zamanda kullanıcı deneyimi (UX) ve arayüz tasarımı (UI) konularına da büyük önem veriyorum.

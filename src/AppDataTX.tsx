@@ -103,7 +103,7 @@ const DataStreamBackground = () => {
 
 const TerminalSection = () => {
   const [text, setText] = useState('');
-  const fullText = "> Mehmet Erbaş - 11. Sınıf Bilişim Öğrencisi\n> Sistem yükleniyor...\n> Portfolyo verileri TX modunda aktarılıyor...\n> Bağlantı başarılı.";
+  const fullText = "> Zeynel Eren Erbaş - 11. Sınıf Bilişim Öğrencisi\n> Sistem yükleniyor...\n> Portfolyo verileri TX modunda aktarılıyor...\n> Bağlantı başarılı.";
   
   useEffect(() => {
     let i = 0;
@@ -167,7 +167,7 @@ export const AppDataTX = () => {
             <div className="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center text-zinc-950">
               <Code2 size={20} />
             </div>
-            <span>MEHMET<span className="text-emerald-500">.DEV</span></span>
+            <span>Zeynel Eren Erbaş<span className="text-emerald-500">.com</span></span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
             <a href="#about" className="hover:text-emerald-500 transition-colors">Hakkımda</a>
@@ -242,8 +242,8 @@ export const AppDataTX = () => {
         <div className="grid md:grid-cols-2 gap-20 items-center">
           <div className="relative aspect-square rounded-3xl overflow-hidden border border-zinc-800 group">
             <img 
-              src="https://picsum.photos/seed/mehmet/800/800" 
-              alt="Mehmet Erbaş" 
+              src="https://picsum.photos/seed/eren/800/800" 
+              alt="Zeynel Eren Erbaş" 
               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
               referrerPolicy="no-referrer"
             />
@@ -392,7 +392,7 @@ export const AppDataTX = () => {
       <footer className="py-12 px-6 border-t border-zinc-900 text-center">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-sm text-zinc-500 font-mono">
-            © 2026 MEHMET ERBAŞ. TÜM HAKLARI SAKLIDIR.
+            © 2026 Zeynel Eren ERBAŞ. TÜM HAKLARI SAKLIDIR.
           </div>
           <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-widest text-zinc-500">
             <a href="#" className="hover:text-emerald-500">GİZLİLİK</a>
