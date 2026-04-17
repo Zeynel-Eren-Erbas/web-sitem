@@ -14,6 +14,8 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 
+import { ErrorBoundary } from './components/ErrorBoundary';
+
 export default function App() {
   const [isAuthReady, setIsAuthReady] = useState(false);
 
