@@ -12,7 +12,6 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-import Games from './pages/Games';
 import Admin from './pages/Admin';
 
 export default function App() {
@@ -27,7 +26,7 @@ export default function App() {
 
   if (!isAuthReady) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center text-zinc-400">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-slate-400">
         Yükleniyor...
       </div>
     );
@@ -41,7 +40,6 @@ export default function App() {
           <Route path="about" element={<About />} />
           <Route path="projects" element={<Projects />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="games" element={<Games />} />
           <Route path="admin" element={<Admin />} />
         </Route>
       </Routes>

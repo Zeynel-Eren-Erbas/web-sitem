@@ -8,6 +8,7 @@ export default function Admin() {
   const [user, setUser] = useState(auth.currentUser);
   const [messages, setMessages] = useState<any[]>([]);
   const [newProject, setNewProject] = useState({ title: '', description: '', link: '', imageUrl: '' });
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((u) => setUser(u));
@@ -30,11 +31,19 @@ export default function Admin() {
   };
 
   const handleLogin = async () => {
+    setLoginError(null);
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login error:", error);
+      if (error.code === 'auth/popup-closed-by-user') {
+        setLoginError("Giriş penceresi çok erken kapatıldı. Lütfen tekrar deneyin.");
+      } else if (error.code === 'auth/unauthorized-domain') {
+        setLoginError("Bu alan adı Firebase'de yetkilendirilmemiş. Firebase Console -> Authentication -> Settings -> Authorized domains kısmına bu sitenin linkini ekleyin.");
+      } else {
+        setLoginError(`Giriş hatası: ${error.message}`);
+      }
     }
   };
 
@@ -63,14 +72,19 @@ export default function Admin() {
   if (!user) {
     return (
       <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-6">
-        <ShieldAlert size={64} className="text-zinc-600 mb-6" />
+        <ShieldAlert size={64} className="text-slate-600 mb-6" />
         <h1 className="text-3xl font-bold mb-8">Admin Girişi</h1>
         <button 
           onClick={handleLogin}
-          className="px-8 py-4 bg-zinc-100 text-zinc-950 font-bold rounded-xl hover:bg-zinc-300 transition-colors"
+          className="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/25"
         >
           Google ile Giriş Yap
         </button>
+        {loginError && (
+          <div className="mt-6 p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-400 text-sm max-w-md text-center">
+            {loginError}
+          </div>
+        )}
       </div>
     );
   }
@@ -81,7 +95,7 @@ export default function Admin() {
         <h1 className="text-4xl md:text-6xl font-black tracking-tighter">ADMIN PANELİ</h1>
         <button 
           onClick={() => signOut(auth)}
-          className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-zinc-100"
+          className="p-3 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 transition-colors text-slate-400 hover:text-slate-100"
           title="Çıkış Yap"
         >
           <LogOut size={20} />
@@ -90,7 +104,7 @@ export default function Admin() {
 
       <div className="grid lg:grid-cols-2 gap-12">
         {/* Add Project */}
-        <div className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-3xl">
+        <div className="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl backdrop-blur-sm">
           <h2 className="text-2xl font-bold mb-6">Yeni Proje Ekle</h2>
           <form onSubmit={handleAddProject} className="space-y-4">
             <input
@@ -99,7 +113,7 @@ export default function Admin() {
               required
               value={newProject.title}
               onChange={e => setNewProject({...newProject, title: e.target.value})}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 focus:outline-none focus:border-zinc-500"
+              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-blue-500"
             />
             <textarea
               placeholder="Proje Açıklaması"
@@ -107,46 +121,46 @@ export default function Admin() {
               rows={3}
               value={newProject.description}
               onChange={e => setNewProject({...newProject, description: e.target.value})}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 focus:outline-none focus:border-zinc-500 resize-none"
+              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-blue-500 resize-none"
             />
             <input
               type="text"
               placeholder="Görsel URL (Opsiyonel)"
               value={newProject.imageUrl}
               onChange={e => setNewProject({...newProject, imageUrl: e.target.value})}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 focus:outline-none focus:border-zinc-500"
+              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-blue-500"
             />
             <input
               type="text"
               placeholder="Proje Linki (Opsiyonel)"
               value={newProject.link}
               onChange={e => setNewProject({...newProject, link: e.target.value})}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-100 focus:outline-none focus:border-zinc-500"
+              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-blue-500"
             />
-            <button type="submit" className="w-full py-3 bg-zinc-100 text-zinc-950 font-bold rounded-xl hover:bg-zinc-300 transition-colors">
+            <button type="submit" className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors">
               Projeyi Kaydet
             </button>
           </form>
         </div>
 
         {/* Messages */}
-        <div className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-3xl">
+        <div className="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl backdrop-blur-sm">
           <h2 className="text-2xl font-bold mb-6">Gelen Mesajlar</h2>
           <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
             {messages.length === 0 ? (
-              <p className="text-zinc-500">Henüz mesaj yok.</p>
+              <p className="text-slate-500">Henüz mesaj yok.</p>
             ) : (
               messages.map(msg => (
-                <div key={msg.id} className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl relative group">
+                <div key={msg.id} className="bg-slate-900 border border-slate-800 p-4 rounded-xl relative group">
                   <button 
                     onClick={() => handleDeleteMessage(msg.id)}
-                    className="absolute top-4 right-4 text-zinc-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-4 right-4 text-slate-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={18} />
                   </button>
-                  <h4 className="font-bold text-zinc-100">{msg.name}</h4>
-                  <a href={`mailto:${msg.email}`} className="text-sm text-zinc-500 hover:text-zinc-300">{msg.email}</a>
-                  <p className="mt-3 text-zinc-400 text-sm">{msg.message}</p>
+                  <h4 className="font-bold text-slate-100">{msg.name}</h4>
+                  <a href={`mailto:${msg.email}`} className="text-sm text-slate-500 hover:text-slate-300">{msg.email}</a>
+                  <p className="mt-3 text-slate-400 text-sm">{msg.message}</p>
                 </div>
               ))
             )}

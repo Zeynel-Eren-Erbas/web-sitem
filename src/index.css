@@ -9,8 +9,8 @@ html, body, #root {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background-color: #09090b;
-  color: #fafafa;
+  background-color: #020617;
+  color: #f8fafc;
   overflow-x: hidden;
 }
 
@@ -19,14 +19,14 @@ html, body, #root {
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #020617;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: #1e293b;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: #334155;
 }

@@ -1,77 +1,59 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Home, User, Briefcase, Mail, Gamepad2, ShieldAlert } from 'lucide-react';
+import { Home, User, Briefcase, Mail } from 'lucide-react';
 
 const navItems = [
   { path: '/', label: 'Ana Sayfa', icon: Home },
   { path: '/about', label: 'Hakkımda', icon: User },
   { path: '/projects', label: 'Projeler', icon: Briefcase },
   { path: '/contact', label: 'İletişim', icon: Mail },
-  { path: '/games', label: 'Oyunlar', icon: Gamepad2 },
-  { path: '/admin', label: 'Admin', icon: ShieldAlert },
 ];
 
 export default function Layout() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-500/30 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-900/20 blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-900/20 blur-[120px] animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }} />
+      </div>
+
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link to="/" className="font-bold text-xl tracking-tighter flex items-center gap-2 z-50">
-            <div className="w-8 h-8 bg-zinc-100 rounded flex items-center justify-center text-zinc-950">
-              M
-            </div>
-            <span>MEHMET<span className="text-zinc-500">.DEV</span></span>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2 z-50 hover:opacity-80 transition-opacity">
+           <img 
+                src="/logo.png" 
+                alt="ZEE 58 Logo" 
+                className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]" 
+              />
           </Link>
 
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 -mr-2 z-50 text-zinc-400 hover:text-zinc-100 transition-colors"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Desktop Navigation */}
+          <nav className="flex items-center gap-6 md:gap-8 z-50 overflow-x-auto">
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`text-sm md:text-base font-medium transition-all hover:text-blue-400 flex items-center gap-2 whitespace-nowrap ${
+                    isActive ? 'text-blue-400' : 'text-slate-400'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
       </header>
 
-      {/* Fullscreen Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-zinc-950/95 backdrop-blur-xl flex items-center justify-center"
-          >
-            <nav className="flex flex-col gap-6 text-center">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`text-3xl md:text-5xl font-bold tracking-tighter flex items-center justify-center gap-4 transition-all ${
-                      isActive ? 'text-zinc-100' : 'text-zinc-600 hover:text-zinc-300'
-                    }`}
-                  >
-                    <Icon size={isActive ? 32 : 28} className={isActive ? 'text-zinc-100' : 'text-zinc-600'} />
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Main Content */}
-      <main className="flex-grow pt-16 relative">
+      <main className="flex-grow pt-20 relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
